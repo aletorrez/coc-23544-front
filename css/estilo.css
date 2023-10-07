@@ -1,0 +1,70 @@
+* { 
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  .icono{
+    width: 120px;
+  }
+
+
+
+.conf {
+    padding-right: 100px;
+}
+
+#carouselExampleControls img{
+    filter: brightness(50%);
+  }
+
+  .card-img-top {
+    height: 100%;
+    object-fit: cover;
+  }
+
+.oradores {
+    text-align: center;
+    padding: 10px;
+  }
+
+  .honolulu {
+    display: flex;
+    gap: 1px;
+    padding: 30px 0 30px 0 ;
+  }
+  .img-honolulu {
+    width: 50%;
+  }
+
+  .txt-honolulu {
+   
+    width: 50%;
+    padding: 10px;
+    background-color: rgb(65, 65, 65);
+    text-align:justify;
+  }
+
+
+  .info{
+    padding :0 200px 0 200px ;
+  }
+
+  .boton{
+    border-bottom: 0;
+    width: 100%;
+    background-color: #81c53d;
+  }
+
+
+.btn-success-submit:hover {
+    width: 100%;
+    background-color: #609130;
+  }
+
+
+
+  footer {
+    
+    background-color: rgb(58, 58, 65);
+    margin-top: 20px;
+}
