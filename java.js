@@ -1,8 +1,8 @@
 let select = document.querySelector("#select");
 let divTotal = document.querySelector(".total");
 let cantidad = document.querySelector(".cantidad");
-let name = document.querySelector(".name");
-let surname = document.querySelector(".surname");
+let nombre = document.querySelector(".nombre");
+let apellido = document.querySelector(".apellido");
 let email = document.querySelector(".email");
 let resume = document.querySelector(".resume");
 
@@ -43,8 +43,8 @@ cantidad.addEventListener("input", (e) => {
 resume.addEventListener("click", (e) => {
   e.preventDefault();
   if (
-    !emptyInput(name) &&
-    !emptyInput(surname) &&
+    !emptyInput(nombre) &&
+    !emptyInput(apellido) &&
     !emptyInput(email) &&
     !emptyInput(cantidad)
   )
@@ -52,7 +52,7 @@ resume.addEventListener("click", (e) => {
     Swal.fire({
       icon: "success",
       title: "Gracias por realizar tu compra",
-      html: `<p>${name.value} ${surname.value}</p>
+      html: `<p>${nombre.value} ${apellido.value}</p>
       <p>Hemos enviado la informacion a: ${email.value}</p>
       <p>${divTotal.textContent}</p>`,
       confirmButtonText: "Continuar",

@@ -10,7 +10,7 @@
 
 
 .conf {
-    padding-right: 100px;
+    padding-right: 240px;
 }
 
 #carouselExampleControls img{
@@ -50,6 +50,7 @@
   }
 
   .boton{
+    padding-left: 10%;
     border-bottom: 0;
     width: 100%;
     background-color: #81c53d;
