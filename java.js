@@ -5,6 +5,34 @@ let nombre = document.querySelector(".nombre");
 let apellido = document.querySelector(".apellido");
 let email = document.querySelector(".email");
 let resume = document.querySelector(".resume");
+let enviar = document.querySelector(".enviar")
+let tema = document.querySelector(".tema");
+
+
+enviar.addEventListener ("click",(e) => {
+  e.preventDefault();
+  if (
+    !emptyInput(nombre) &&
+    !emptyInput(apellido) &&
+    !emptyInput(email)
+  )
+
+  {
+    Swal.fire({
+      icon: "success",
+      title: "Gracias por conteirte en un orador ",
+      html: `<p>${nombre.value} ${apellido.value}</p>
+      <p>Hemos enviado la informacion a tu email : ${email.value}</p>`,
+      confirmButtonText: "Continuar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "./index.html";
+      }
+    });
+  }
+});
+
+
 
 let total = (cantidad, categoria, div) => {
   if (categoria === "1") {
@@ -30,6 +58,7 @@ let emptyInput = (input) => {
 };
 
 select.addEventListener("change", (e) => {
+
   if (e.target.value === "Seleccione categoria") {
     divTotal.textContent = "Total a pagar: $";
   }
@@ -63,3 +92,4 @@ resume.addEventListener("click", (e) => {
     });
   }
 });
+
