@@ -10,7 +10,7 @@
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="./css/estilo.css">
 
-</head>
+  </head>
 
 <body>
 
@@ -26,7 +26,7 @@
               <div class="collapse navbar-collapse justify-content-end " id="navbarNavAltMarkup">
                <div class="navbar-nav">
                 <a class="nav-link " href="#">La conferencia</a>
-                <a class="nav-link " href="#">Los oradores</a>
+                <a class="nav-link " href="oradores.html">Los oradores</a>
                 <a class="nav-link " href="#">El lugar y la fecha</a>
                 <a class="nav-link active " href="#">Conviertete en orador</a>
                 <a class="nav-link active text-success" href="tickets.html">Comprar tickets</a>
@@ -53,70 +53,65 @@
             <div class="col">
 
               <div class="mb-3">
-                <input type="text" id="nombre" class="form-control apellido" placeholder="Nombre" required>
+                <input type="text" name="nombre" id="nombre" class="form-control nombre" placeholder="Nombre"  required>
               </div>
             </div>
 
 
             <div class="col">
               <div class="mb-3">
-                <input type="text" id="nombre" class="form-control nombre" placeholder="Apellido" required>
+                <input type="text" name="apellido" id="apellido" class="form-control apellido" placeholder="Apellido"  required>
               </div>
             </div>
 
             <div class="mb-3">
-                <input type="text" id="email" class="form-control email" placeholder="email:@example" required>
+                <input type="text" name="email" id="email" class="form-control email" placeholder="email:@example"  required>
               </div>
 
             <div class="mb-3">
-                <input type="text" id="tema" class="form-control tema" placeholder="Tema" required >
+                <input type="text" name="tema" id="tema" class="form-control tema" placeholder="Tema"  required >
               </div>
     
-          <div class="form-outline mb-3">
-            <textarea class="form-control" id="form6Example7" rows="3" placeholder="Sobre qué quieres hablar?" required></textarea>
-            <label class="form-label" for="infoAddic" style="color: rgb(92, 92, 92);" >Recuerda incluir un título para tu
-              charla</label>
-          </div>
+          
              
           <div class="mb-4">
             <label class="form-label" for="infoAddic" style="color: rgb(92, 92, 92);" > fecha:</label>
-            <input type="datetime-local" id="tema" class="datetime-local" placeholder="" required>
+            <input type="datetime-local" name="fecha" id="fecha" class="datetime-local" placeholder="" required>
           </div>
 
                 
           <div class="mb-3">
-            <input type="submit" class="btn btn-success green2 border-0 fw-bold w-100 enviar" value="enviar">  
+            <input type="submit" id="btenviar" class="btn btn-success green2 border-0 fw-bold w-100 enviar" value="enviar">  
           </div>
 
           </div>
           
     </form>
 
-  <footer>
-    <nav class="navbar navbar-expand-lg navbar-light justify-content-center text-center navFooter">
-        <ul class="navbar-nav gap-5">
-          <li class="nav-item">
-            <a class="nav-link fs-6 text-white" href="#">Preguntas<br>Frecuentes</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fs-6 text-white" href="#">Contáctanos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fs-6 text-white" href="#">Prensa</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fs-6 text-white" href="#">Términos<br>y condiciones</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fs-6 text-white" href="#">Privacidad</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link fs-6 text-white" href="#">Estudiantes</a>
-          </li>
-        </ul>
-      </nav>
-</footer>
-
+    <footer>
+      <nav class="navbar navbar-expand-lg navbar-light justify-content-center text-center navFooter">
+          <ul class="navbar-nav gap-5">
+            <li class="nav-item">
+              <a class="nav-link fs-6 text-white" href="#">Preguntas<br>Frecuentes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs-6 text-white" href="#">Contáctanos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs-6 text-white" href="#">Prensa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs-6 text-white" href="#">Términos<br>y condiciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs-6 text-white" href="#">Privacidad</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fs-6 text-white" href="#">Estudiantes</a>
+            </li>
+          </ul>
+        </nav>
+  </footer>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
@@ -124,6 +119,54 @@ integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466
 crossorigin="anonymous"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="./java.js"></script>
+
+<script>
+  crearOperador = () => {
+      const orador = {
+           nombre:  document.getElementById("nombre").value,
+           apellido: document.getElementById("apellido").value,
+           email: document.getElementById("email").value,
+           tema: document.getElementById("tema").value
+      };
+
+      //debo enviar estos datos al sevidor: https://www.freecodecamp.org/espanol/news/tutorial-de-fetch-api-en-javascript-con-ejemplos-de-js-fetch-post-y-header/
+      fetch(`http://localhost:8081/web-app-23544/api/orador`, {
+          method: "POST",
+          body: JSON.stringify(orador),
+      })
+      .then(response => response.json()) 
+      .then(json => {
+          alert(`alta de orador id:${json.id}] ok`);
+      })
+      .catch(err => console.log(err));
+  }
+
+  document.getElementById("btenviar").addEventListener('click',crearOperador);
+  enviar.addEventListener ("click",(e) => {
+  e.preventDefault();
+  if (
+    !emptyInput(nombre) &&
+    !emptyInput(apellido) &&
+    !emptyInput(email)
+  )
+
+  {
+    Swal.fire({
+      icon: "success",
+      title: "Gracias por conteirte en un orador ",
+      html: `<p>${nombre.value} ${apellido.value}</p>
+      <p>Hemos enviado la informacion a tu email : ${email.value}</p>`,
+      confirmButtonText: "Continuar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "./index.html";
+      }
+    });
+  }
+});
+</script>
+
+
 </body>
 
 

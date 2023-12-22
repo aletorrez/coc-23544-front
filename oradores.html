@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title>Codo a Codo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./css/estilo.css">
+
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+         
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                  </a>
+              <a class="navbar-brand" href="index.html">Conf Bs.As.</a>
+    
+
+              <div class="collapse navbar-collapse justify-content-end " id="navbarNavAltMarkup">
+               <div class="navbar-nav">
+                <a class="nav-link " href="#">La conferencia</a>
+                <a class="nav-link  active" href="oradores.html">Los oradores</a>
+                <a class="nav-link " href="#">El lugar y la fecha</a>
+                <a class="nav-link " href="orador.html">Conviertete en orador</a>
+                <a class="nav-link active text-success" href="tickets.html">Comprar tickets</a>
+
+               </div>
+                
+              </div>
+            </div>
+          </nav>
+    </header>
+
+
+    <div class="container">
+      <div class="row">
+          <div class="col-12 mt-2">
+              <button class="btn btn-success" id="btnGetUsers">
+                  Listar Oradores
+              </button>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-12 mt-1" id="msj">
+
+          </div>
+          <div class="col-12">
+              <div id="users">
+                  <table class="table">
+                      <thead>
+                      <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">Nombre</th>
+                          <th scope="col">Apellido</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Tema</th>
+                          <th scope="col">&nbsp;</th>
+                      </tr>
+                      </thead>
+                      <tbody id="usersRows">                          
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+    
+  <footer>
+    <nav class="navbar navbar-expand-lg navbar-light justify-content-center text-center navFooter">
+        <ul class="navbar-nav gap-5">
+          <li class="nav-item">
+            <a class="nav-link fs-6 text-white" href="#">Preguntas<br>Frecuentes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fs-6 text-white" href="#">Contáctanos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fs-6 text-white" href="#">Prensa</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fs-6 text-white" href="#">Términos<br>y condiciones</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fs-6 text-white" href="#">Privacidad</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fs-6 text-white" href="#">Estudiantes</a>
+          </li>
+        </ul>
+      </nav>
+</footer>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="java.js"></script>
+
+  <script>
+    function listarOradores() {/*f2*/
+        //1 preparar
+        const respuesta = fetch(`http://localhost:8081/web-app-23544/api/orador`);
+
+        //2 invocar
+        respuesta
+            .then(response => response.json())
+            .then(data => procesarListado(data))//fulfilled
+            .catch(error => dibujarError(error))//rejected
+    }
+    function procesarListado(data) {
+        const listarOradores = data;
+        let rows = '';
+        for(let orador of listarOradores) {
+            console.log(orador);
+            rows += `
+            <tr>
+                <th scope="row">${orador.id}</th>
+                <td>${orador.nombre}</td>
+                <td>${orador.apellido}</td>
+                <td>${orador.mail}</td>
+                <td>${orador.tema}</td>
+                <td>
+                    <button>Editar</button>
+                    <button onclick="eliminarOrador(${orador.id})">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+            `
+        }
+        document.getElementById('usersRows').innerHTML = rows;
+    }
+
+    function dibujarError(error) {
+        console.log(error);
+        const alerta = `<div class="alert alert-danger" role="alert">
+            ${error.toString()}
+        </div>`;
+        document.getElementById('msj').innerHTML = alerta;
+    }
+
+    document.getElementById('btnGetUsers').addEventListener('click',listarOradores);
+</script>
+
+<!--eliminar-->
+<script>
+    eliminarOrador = (id) => {
+        if(!confirm('SEGURO?')) {
+            return;
+        }
+
+        fetch(`http://localhost:8081/web-app-23544/api/orador?id_orador=${id}`, {
+            method: "DELETE",
+        })
+        .then(response => response) 
+        .then(json => {
+            alert(`se ha eliminado el orador id: ${id}`);
+            listarOradores();
+        })
+        .catch(err => console.log(err));
+    }
+</script>
+
+</body>
+
+
+</html>
